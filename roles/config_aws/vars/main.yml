@@ -1,0 +1,4 @@
+AWS_VPC_ID: 12345
+AWS_REGION: eu-west-1
+AWS_SECRET_KEY: xxxxxxxxxxxxxxxx
+AWS_ACCESS_KEY: xxxxxxxxxxxxxxxx

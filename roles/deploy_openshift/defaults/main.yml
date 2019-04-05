@@ -1,0 +1,10 @@
+---
+openshift_client_binary: /usr/bin/oc
+
+__myapp_template_file: "myapp-template.yaml"
+
+openshift_myapp_image: "{{ prod_image_name }}"
+openshift_myapp_name: "myapp"
+
+# Default the replica count to the number of masters.
+openshift_myapp_replica_count: 1

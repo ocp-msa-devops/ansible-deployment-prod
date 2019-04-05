@@ -1,0 +1,28 @@
+---
+# trigger jenkins pipeline
+#- name: trigger build
+
+# deploy application to openshift
+- name: deploy myapp to openshift
+  hosts: myapp-openshift
+  roles:
+    - sync_images
+    - deploy_openshift
+
+# deploy application to aws servers
+- name: deploy myapp to aws
+  hosts: myapp-aws
+  gather_facts: false
+  roles:
+    - base-config
+    - deploy_myapp
+    - config_aws
+
+# deploy application to vmware servers
+#- name: setup vmware
+#  hosts: myapp-vmware
+#  gather_facts: false
+#  roles:
+#    - base-config
+#    - deploy_myapp
+#    - config_vmware

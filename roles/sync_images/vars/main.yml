@@ -1,0 +1,4 @@
+S_TOKEN: 'Cjmpvw0vAD8cR6jEwrWi3NZ64H0Z0Z2A7Rze_21h-50'
+D_TOKEN: admin:xxx 
+S_IMAGE: "{{ stage_image_name }}"
+D_IMAGE: "{{ prod_image_name }}"

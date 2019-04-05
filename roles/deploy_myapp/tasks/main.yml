@@ -1,0 +1,30 @@
+---
+- name: install {{ payload }}
+  yum:
+    name: "{{ payload }}"
+    state: latest
+
+- name: enable {{ payload }} at boot
+  service:
+    name: "{{ payload }}"
+    enabled: yes
+
+- name: create tomcat default web directory
+  file:
+    path: "{{ tomcat_web_root }}"
+    state: directory
+
+- name: get myapp war to tomcat webroot
+  get_url:
+    url: "{{ myapp_src_url }}"
+    dest: "{{ tomcat_web_root }}/ROOT.war"
+    url_username: "{{ nexus_user }}"
+    url_password: "{{ nexus_passwd }}"
+    force_basic_auth: yes
+    force: yes
+    mode: 0644
+
+- name: restart tomcat
+  service:
+    name: "{{ payload }}"
+    state: restarted

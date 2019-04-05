@@ -1,0 +1,15 @@
+---
+# Initial, common, system setup steps
+
+- name: enable sudo without tty for some ansible commands
+  replace:
+    path: /etc/sudoers
+    regexp: '^Defaults\s*requiretty'
+    replace: 'Defaults  !requiretty'
+    backup: yes
+
+- name: enable repos
+  template:
+    src: repos_template.j2
+    dest: /etc/yum.repos.d/myapp.repo
+    mode: 0644

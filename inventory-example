@@ -1,0 +1,9 @@
+[myapp-openshift:vars]
+stage_image_name=docker-registry-default.apps.example.com/stage/myapp-tasks:latest
+prod_image_name=registry.example.com/myapp-prod/myapp:20190405
+
+[myapp-openshift]
+master.example.com 
+
+[myapp-aws]
+tomcat.example.com

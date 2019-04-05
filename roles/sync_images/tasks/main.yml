@@ -1,0 +1,8 @@
+- name: install skopeo
+  yum:
+    name: skopeo
+    state: present
+
+- name: sync image to prod
+  command: >
+    skopeo copy --src-tls-verify=false --dest-tls-verify=false --screds {{ S_TOKEN }} --dcreds {{ D_TOKEN }} docker://{{ S_IMAGE }} docker://{{ D_IMAGE }}

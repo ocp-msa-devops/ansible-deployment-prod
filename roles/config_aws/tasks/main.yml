@@ -1,0 +1,17 @@
+- name: create myapp ec2 security group
+  ec2_group:
+    name: myapp-sg
+    description: myapp EC2 security group
+    vpc_id: "{{ AWS_VPC_ID }}"
+    region: "{{ AWS_REGION }}"
+    aws_secret_key: "{{ AWS_SECRET_KEY }}"
+    aws_access_key: "{{ AWS_ACCESS_KEY }}"
+    rules:
+      - proto: tcp
+        from_port: 8080
+        to_port: 8080
+        cidr_ip: 0.0.0.0/0
+      - proto: tcp
+        from_port: 22
+        to_port: 22
+        cidr_ip: 10.0.0.0/8

@@ -1,0 +1,5 @@
+payload: tomcat
+tomcat_web_root:  /usr/share/tomcat/webapps/ROOT
+myapp_src_url: "http://nexus-cicd.apps.example.com/repository/maven-snapshots/org/jboss/quickstarts/eap/jboss-tasks-rs/7.0.0-SNAPSHOT/jboss-tasks-rs-7.0.0-20190405.101102-1.war" 
+nexus_user: "admin"
+nexus_passwd: "admin123"

@@ -1,0 +1,42 @@
+---
+- name: Ensure application project exists
+  oc_project:
+    name: myapp-prod
+    state: present
+    node_selector:
+    - ""
+  register: create_app_project
+
+- name: Make temp directory for aplication templates
+  command: mktemp -d /tmp/app-ansible-XXXXXX
+  register: mktemp
+  changed_when: False
+
+- name: Copy admin client config
+  copy:
+    src: "/etc/origin/master/admin.kubeconfig"
+    dest: "{{ mktemp.stdout }}/admin.kubeconfig"
+    remote_src: yes
+  changed_when: false
+
+- name: Copy application templates to temp directory
+  copy:
+    src: "{{ item }}"
+    dest: "{{ mktemp.stdout }}/{{ item }}"
+  with_items:
+  - "{{ __myapp_template_file }}"
+
+- name: Apply the myapp template file
+  shell: >
+    {{ openshift_client_binary }} process -f "{{ mktemp.stdout }}/{{ __myapp_template_file }}"
+    --param IMAGE="{{ openshift_myapp_image }}"
+    --param APPLICATION_NAME="{{ openshift_myapp_name }}"
+    --param REPLICA_COUNT="{{ openshift_myapp_replica_count }}"
+    --config={{ mktemp.stdout }}/admin.kubeconfig
+    | {{ openshift_client_binary }} apply --config={{ mktemp.stdout }}/admin.kubeconfig -n myapp-prod -f -
+
+- name: Remove temp directory
+  file:
+    state: absent
+    name: "{{ mktemp.stdout }}"
+  changed_when: False
